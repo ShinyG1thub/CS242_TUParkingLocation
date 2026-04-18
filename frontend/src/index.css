@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-tu-primary: #006400;   /* Dark green */
+  --color-tu-accent: #00a651;    /* Bright green */
+  --color-tu-light: #e6f4ea;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
