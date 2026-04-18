@@ -6,9 +6,13 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
+    host: true,             // รองรับการเข้าถึงจาก Docker container
+    port: 5173,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:5000',
+        // ถ้ารันใน Docker → ใช้ชื่อ service "backend"
+        // ถ้ารันใน Local  → ใช้ 127.0.0.1:5000
+        target: process.env.VITE_API_URL || 'http://127.0.0.1:5000',
         changeOrigin: true,
       },
     },
