@@ -13,8 +13,8 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - .:/app                  # Hot-reload: แก้ Python แล้วเห็นทันที
-      - /app/frontend           # ป้องกัน node_modules overwrite
+      - .:/app # Hot-reload: แก้ Python แล้วเห็นทันที
+      - /app/frontend # ป้องกัน node_modules overwrite
     environment:
       - FLASK_ENV=development
       - FLASK_DEBUG=1
@@ -26,8 +26,8 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/frontend    # Hot-reload: แก้ React แล้วเห็นทันที
-      - /frontend/node_modules  # ป้องกัน node_modules overwrite
+      - ./frontend:/frontend # Hot-reload: แก้ React แล้วเห็นทันที
+      - /frontend/node_modules # ป้องกัน node_modules overwrite
     depends_on:
       - backend
     environment:

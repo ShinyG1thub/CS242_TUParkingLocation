@@ -57,36 +57,48 @@ TUparkingLocation/
 
 ## 🚀 Getting Started
 
-เนื่องจากเป็นสถาปัตยกรรมแบบแยกส่วน (Decoupled) จำเป็นต้องรันทั้ง Backend และ Frontend พร้อมกัน.
+เนื่องจากเป็นสถาปัตยกรรมแบบแยกส่วน (Decoupled) จำเป็นต้องรันทั้ง Backend และ Frontend พร้อมกัน
 
-### 1. รัน Python Backend (API)
+### Option A: ใช้ Docker (แนะนำ ✅)
 
-เปิด Terminal แรกและรัน Flask application:
+รันทุกอย่างด้วยคำสั่งเดียว:
 
-```powershell
+```bash
+docker compose up --build
+```
+
+| Service | URL |
+|---------|-----|
+| Frontend (React) | http://localhost:5173 |
+| Backend API (Flask) | http://localhost:5000/api/parking |
+
+### Option B: รันแบบ Manual (Local)
+
+เปิด **2 terminals** พร้อมกัน:
+
+**Terminal 1 — Python Backend:**
+```bash
 pip install -r requirements.txt
 python run.py
 ```
-*Backend API จะรันที่ `http://127.0.0.1:5000`*
 
-### 2. รัน React Frontend (UI)
-
-เปิด Terminal ที่สอง ไปที่โฟลเดอร์ frontend และรัน Vite dev server:
-
-```powershell
+**Terminal 2 — React Frontend:**
+```bash
 cd frontend
 npm install
 npm run dev
 ```
-*Frontend จะรันที่ `http://localhost:5173`*
 
-จากนั้นเปิด `http://localhost:5173` ในเบราว์เซอร์เพื่อใช้งานระบบ
+เปิด `http://localhost:5173` ในเบราว์เซอร์เพื่อใช้งานระบบ
+
 ---
 
 ## 🛠️ How to Extend
 
-- **เพิ่ม Machine Learning**: แก้ไขไฟล์ `app/services/parking_service.py` เพื่อดักจับการ query ฐานข้อมูลและใช้โมเดลการทำนาย.
+- **เพิ่ม Machine Learning**: แก้ไขไฟล์ `app/services/parking_service.py` เพื่อดักจับการ query ฐานข้อมูลและใช้โมเดลการทำนาย
 - **Real-Time Data**: Integrate `Flask-SocketIO` เพื่อสตรีมการเปลี่ยนแปลงสถานะช่องจอดไปยัง React frontend แบบเรียลไทม์
-- **Production Deployment**: 
-  - Backend: รัน Flask โดยใช้ WSGI server เช่น `Gunicorn` และเปลี่ยน SQLite เป็น PostgreSQL.
-  - Frontend: Build the static bundle (`npm run build`) และ deploy ผ่าน Nginx.
+- **Production Deployment** (เมื่อพัฒนาเสร็จ):
+  1. ดู `docker-compose.prod.yml` ที่เตรียมไว้ (มี TODO comment อธิบายทุกขั้นตอน)
+  2. สร้าง `frontend/Dockerfile.prod` (Multi-stage build → Nginx)
+  3. เปลี่ยน SQLite → PostgreSQL ใน `docker-compose.prod.yml`
+  4. รัน: `docker compose -f docker-compose.prod.yml up --build`
