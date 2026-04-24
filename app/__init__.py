@@ -37,18 +37,21 @@ def seed_mock_data():
     print("🌱 Seeding mock parking data for TUparkingLocation...")
 
     areas_data = [
-        {"name": "GYM 7",       "total_slots": 60,  "available_slots": 22},
-        {"name": "Parking 1",   "total_slots": 120, "available_slots": 8},
-        {"name": "Parking 2",   "total_slots": 80,  "available_slots": 35},
-        {"name": "Parking 3",   "total_slots": 45,  "available_slots": 12},
-        {"name": "Parking 4",   "total_slots": 90,  "available_slots": 67},
+        {"name": "GYM 7",       "lat": 14.0754, "lon": 100.6041, "total_slots": 60,  "available_slots": 22, "address": "Tambon Khlong Nueng, Amphoe Khlong Luang, Pathum Thani 12120"},
+        {"name": "Parking 1",   "lat": 14.0700, "lon": 100.6000, "total_slots": 120, "available_slots": 8, "address": "99 Moo 18 Paholyothin Road, Khlong Nueng"},
+        {"name": "Parking 2",   "lat": 14.0680, "lon": 100.6050, "total_slots": 80,  "available_slots": 35, "address": "TU Main Library Zone, Pathum Thani 12120"},
+        {"name": "Parking 3",   "lat": 14.0720, "lon": 100.6090, "total_slots": 45,  "available_slots": 12, "address": "Faculty of Engineering, Thammasat University"},
+        {"name": "Parking 4",   "lat": 14.0650, "lon": 100.6100, "total_slots": 90,  "available_slots": 67, "address": "SC Building Zone, Rangsit Campus"},
     ]
 
     for data in areas_data:
         area = ParkingArea(
             name=data["name"],
+            address=data["address"],
+            latitude=data["lat"],
+            longitude=data["lon"],
             total_slots=data["total_slots"],
-            available_slots=data["available_slots"]
+            available_slots_db=data["available_slots"]
         )
         db.session.add(area)
         db.session.flush()                     # Get ID for slots
