@@ -4,6 +4,8 @@ from flask import Flask
 from flask_cors import CORS
 from .extensions import db
 from .routes.parking_routes import parking_bp
+from .routes.slot_routes import slot_bp
+from .routes.ml_routes import ml_bp
 from .models.parking import ParkingArea, ParkingSlot
 from .models.ml_models import MLModel, Prediction, TrainingHistory
 
@@ -27,7 +29,9 @@ def create_app():
 
     # Register routes
     app.register_blueprint(parking_bp)
-
+    app.register_blueprint(slot_bp)
+    app.register_blueprint(ml_bp)
+    
     return app
 
 
