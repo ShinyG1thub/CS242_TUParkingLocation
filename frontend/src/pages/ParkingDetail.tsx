@@ -11,7 +11,7 @@ type ParkingArea = {
 
 type ParkingSlot = {
   name: string;
-  status: "available" | "occupied";
+  status: "available" | "occupied" | "maintenance";
 };
 
 type ParkingDetailResponse = {
@@ -115,27 +115,40 @@ export default function ParkingDetail() {
             <div className="flex gap-4 text-xs font-bold text-gray-500 uppercase tracking-wider">
               <span className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-emerald-400"></div> Open</span>
               <span className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-red-400"></div> Full</span>
+              <span className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-full bg-amber-400"></div> Service</span>
             </div>
           </div>
           
           <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 gap-3">
             {slots.map((slot) => {
               const isAvail = slot.status === "available";
+              const isMaintenance = slot.status === "maintenance";
               return (
                 <div
                   key={slot.name}
                   className={`relative aspect-square rounded-2xl flex flex-col items-center justify-center text-center transition-transform hover:scale-105 cursor-default ${
                     isAvail
                       ? "bg-gradient-to-br from-emerald-100 to-emerald-50 border border-emerald-200 text-emerald-700 shadow-sm shadow-emerald-100/50"
-                      : "bg-gradient-to-br from-gray-100 to-gray-50 border border-red-100/50 text-red-500 opacity-80"
+                      : isMaintenance
+                        ? "bg-gradient-to-br from-amber-100 to-amber-50 border border-amber-200 text-amber-700"
+                        : "bg-gradient-to-br from-gray-100 to-gray-50 border border-red-100/50 text-red-500 opacity-80"
                   }`}
                 >
-                  <div className={`font-mono text-lg sm:text-xl font-bold ${isAvail ? 'text-emerald-700' : 'text-red-400 line-through decoration-2 decoration-red-300'}`}>
+                  <div className={`font-mono text-lg sm:text-xl font-bold ${
+                    isAvail
+                      ? "text-emerald-700"
+                      : isMaintenance
+                        ? "text-amber-700"
+                        : "text-red-400 line-through decoration-2 decoration-red-300"
+                  }`}>
                     {slot.name.replace('Slot-', '')}
                   </div>
-                  {isAvail && (
-                     <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                  )}
+                  {isAvail ? (
+                    <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                  ) : null}
+                  {isMaintenance ? (
+                    <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
+                  ) : null}
                 </div>
               );
             })}

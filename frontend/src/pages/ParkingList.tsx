@@ -14,7 +14,7 @@ type ParkingArea = {
 };
 
 // Create a custom DivIcon for markers
-const createCustomIcon = (available: number, total: number) => {
+const createCustomIcon = (available: number) => {
   const isFull = available === 0;
   const colorClass = isFull ? "bg-red-500" : "bg-emerald-500";
   return L.divIcon({
@@ -70,7 +70,7 @@ export default function ParkingList() {
               <Marker 
                 key={`marker-${area.id}`} 
                 position={[area.latitude, area.longitude]}
-                icon={createCustomIcon(area.available_slots, area.total_slots)}
+                icon={createCustomIcon(area.available_slots)}
               >
                 <Popup className="rounded-xl overflow-hidden shadow-sm">
                   <div className="font-semibold text-gray-900">{area.name}</div>

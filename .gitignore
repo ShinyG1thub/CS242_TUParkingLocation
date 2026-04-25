@@ -5,3 +5,17 @@ __pycache__/
 .env
 .venv/
 dist/
+instance/
+node_modules/
+*.log
+
+# ML model weights and other large artifacts
+ML/*.pt
+ML/*.pth
+ML/*.onnx
+ML/*.engine
+ML/uploads/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

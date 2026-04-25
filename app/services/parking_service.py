@@ -23,6 +23,8 @@ class ParkingAreaDict(TypedDict):
 
 
 class ParkingSlotDict(TypedDict):
+    id: int
+    area_id: int
     name: str
     status: str
 
@@ -69,7 +71,15 @@ class ParkingManager:
     def get_parking_slots(self, area_id: int) -> List[ParkingSlotDict]:
         """Retrieve all slots belonging to a specific parking area."""
         slots: List[ParkingSlot] = ParkingSlot.query.filter_by(area_id=area_id).order_by(ParkingSlot.name).all()
-        return [{"name": s.name, "status": s.status} for s in slots]
+        return [
+            {
+                "id": s.id,
+                "area_id": s.area_id,
+                "name": s.name,
+                "status": s.status,
+            }
+            for s in slots
+        ]
 
     # UML Required Methods
     def add_parking_area(self, name: str, total_slots: int, address: str = None, lat: float = None, lon: float = None) -> ParkingArea:
@@ -107,4 +117,4 @@ class ParkingManager:
         return json.dumps(slots_list)
 
 # Instantiate the singleton manager for routes to use
-parking_manager = ParkingManager()
+parking_manager = ParkingManager()
